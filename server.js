@@ -1,11 +1,14 @@
 const express = require('express');
-const req = require('express/lib/request');
+const usersRouter = require('./users-router');
 const server = express()
 server.use(express.json());
+
+server.use('/', usersRouter);
 
 server.use('*', (req, res, next) => {
     next({ status: 404, message: 'not found' });
 });
+
 
 server.use((err, req, res, next) => {
     res.status(err.status || 500).json({
